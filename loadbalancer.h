@@ -2,25 +2,29 @@
 #define LOADBALANCER_H
 
 #include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
 #include "request.h"
 #include "requestqueue.h"
 #include "webserver.h"
-#include <vector>
-
 using namespace std;
 
 class loadbalancer {
     private:
-        requestqueue q;
+        requestqueue request_q;
         vector<webserver> servers;
         string logfile;
+        int clockcycle;
 
     public:
-        loadbalancer() {}
+        loadbalancer(string logfile) {}
 
         void update() {}
 
-        void addRequest() {}
+        void add_request(request* request) {}
+
+        void add_server() {}
 
         void print() {}
 };

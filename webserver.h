@@ -7,23 +7,23 @@ using namespace std;
 
 class webserver
 {
-private:
-    request r;
-    int request_added;
-    int clockcycle;
+    private:
+        request r;
+        int request_added;
+        int clockcycle;
 
-public:
-    webserver() {}
+    public:
+        webserver() {}
 
-    void update() {}
+        void update() {}
 
-    bool isAvailable() {}
+        bool is_available() {}
 
-    bool isFull() {}
+        bool is_full() {}
 
-    void addRequest() {}
+        void add_request(request* r) {}
 
-    request getRequest() {}
-};
+        request get_request() {}
+    };
 
 #endif

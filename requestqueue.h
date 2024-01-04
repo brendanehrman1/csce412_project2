@@ -7,15 +7,15 @@ using namespace std;
 
 class requestqueue
 {
-private:
-    queue<request> request_q;
+    private:
+        queue<request> request_q;
 
-public:
-    requestqueue() {}
+    public:
+        requestqueue() {}
 
-    void push() {}
+        void push(request* request) {}
 
-    bool pop() {}
+        request* pop() {}
 };
 
 #endif

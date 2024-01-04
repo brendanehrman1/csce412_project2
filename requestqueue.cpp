@@ -3,19 +3,19 @@
 
 class requestqueue
 {
-private:
-    queue<request*> request_q;
+    private:
+        queue<request*> request_q;
 
-public:
-    requestqueue() {}
+    public:
+        requestqueue() {}
 
-    void push(request* r) {
-        request_q.push(r);
-    }
+        void push(request* r) {
+            request_q.push(r);
+        }
 
-    request* pop() {
-        request* r = request_q.front();
-        request_q.pop();
-        return r;
-    }
+        request* pop() {
+            request* r = request_q.front();
+            request_q.pop();
+            return r;
+        }
 };
