@@ -1,13 +1,32 @@
+/**
+ * @file loadbalancer.cpp
+ * @brief CPP file for the LoadBalancer class.
+ */
+
 #include "loadbalancer.h"
 
+/**
+ * @brief Constructor for the LoadBalancer class.
+ * @param logfile The path to the log file.
+ */
 loadbalancer::loadbalancer(string logfile) : logfile(logfile), clockcycle(0) {
     request_q = new requestqueue();
 }
 
+/**
+ * @brief Destructor for the LoadBalancer class.
+ */
 loadbalancer::~loadbalancer() {
     delete request_q;
 }
 
+/**
+ * @brief Updates the load balancer, assigning requests to servers and logging activities.
+ * @see webserver::get_request()
+ * @see webserver::update()
+ * @see requestqueue::pop()
+ * @see requestqueue::push()
+ */
 void loadbalancer::update() {
     ofstream log;
     log.open(logfile, ios_base::app);
@@ -36,20 +55,37 @@ void loadbalancer::update() {
     clockcycle++;
 }
 
+/**
+ * @brief Adds a request to the load balancer's request queue.
+ * @param request The request to be added.
+ * @see requestqueue::push()
+ */
 void loadbalancer::add_request(request* request) {
     request_q->push(request);
 }
 
+/**
+ * @brief Adds a server to the load balancer's list of servers.
+ * @param server The server to be added.
+ */
 void loadbalancer::add_server(webserver* server) {
     servers.push_back(server);
 }
 
+/**
+ * @brief Removes and returns the last server from the load balancer's list of servers.
+ * @return The removed server.
+ */
 webserver* loadbalancer::remove_server() {
     webserver* server = servers.back();
     servers.pop_back();
     return server;
 }
 
+/**
+ * @brief Prints the status of servers in the load balancer.
+ * @see webserver::get_request()
+ */
 void loadbalancer::print() {
     cout << "----------------------------------------------------------" << endl;
     for (size_t i = 0; i < servers.size(); i++) {
