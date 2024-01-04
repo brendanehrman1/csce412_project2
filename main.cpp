@@ -19,23 +19,32 @@ int main (int argc, char* argv[]) {
     int num_initial_request = stoi(argv[3]);
     string logfile = argv[4];
 
-    loadbalancer lb(logfile);
+    loadbalancer* lb = new loadbalancer(logfile);
 
     for (int i = 0; i < num_server; i++) {
-        webserver server;
-        lb.add_server(server);
+        webserver* server = new webserver();
+        lb->add_server(server);
+        cout << "ADDED SERVER" << endl;
     }
     
     for (int i = 0; i < num_initial_request; i++) {
-        request request;
-        lb.add_request(&request);
+        request* r = new request();
+        lb->add_request(r);
+        cout << "ADDED REQUEST" << endl;
     }
 
     for (int i = 0; i < num_clockcycle; i++) {
-        lb.update();
-        system("CLS");
-        lb.print();
+        lb->update();
+        cout << "UPDATED " << i << endl;
+        // system("CLS");
+        // lb.print();
     }
+
+    for (int i = 0; i < num_server; i++) {
+        delete lb->remove_server();
+    }
+
+    delete lb;
 
     return 0;
 

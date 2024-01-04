@@ -13,7 +13,7 @@ using namespace std;
 class loadbalancer {
     private:
         requestqueue request_q;
-        vector<webserver> servers;
+        vector<webserver*> servers;
         string logfile;
         int clockcycle;
 
@@ -24,7 +24,9 @@ class loadbalancer {
 
         void add_request(request* request);
 
-        void add_server(webserver server);
+        void add_server(webserver* server);
+
+        webserver* remove_server();
 
         void print();
 };

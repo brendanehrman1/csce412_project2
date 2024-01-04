@@ -23,7 +23,7 @@ class webserver
 
         void add_request(request* r);
 
-        request get_request();
+        request* get_request();
     };
 
 #endif

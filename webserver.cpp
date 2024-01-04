@@ -8,6 +8,7 @@ webserver::webserver() {
 void webserver::update() {
     clockcycle++;
     if(r->get_time() + request_added == clockcycle) {
+        delete r;
         r = nullptr;
         request_added = -1;
     }
@@ -26,6 +27,6 @@ void webserver::add_request(request* r) {
     request_added = clockcycle;
 }
 
-request webserver::get_request() {
-    return *r;
+request* webserver::get_request() {
+    return r;
 }
