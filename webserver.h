@@ -8,22 +8,22 @@ using namespace std;
 class webserver
 {
     private:
-        request r;
+        request* r;
         int request_added;
         int clockcycle;
 
     public:
-        webserver() {}
+        webserver();
 
-        void update() {}
+        void update();
 
-        bool is_available() {}
+        bool is_available();
 
-        bool is_full() {}
+        bool is_full();
 
-        void add_request(request* r) {}
+        void add_request(request* r);
 
-        request get_request() {}
+        request get_request();
     };
 
 #endif

@@ -18,15 +18,15 @@ class loadbalancer {
         int clockcycle;
 
     public:
-        loadbalancer(string logfile) {}
+        loadbalancer(string logfile);
 
-        void update() {}
+        void update();
 
-        void add_request(request* request) {}
+        void add_request(request* request);
 
-        void add_server(webserver server) {}
+        void add_server(webserver server);
 
-        void print() {}
+        void print();
 };
 
 #endif

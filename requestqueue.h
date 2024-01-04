@@ -8,14 +8,14 @@ using namespace std;
 class requestqueue
 {
     private:
-        queue<request> request_q;
+        queue<request*> request_q;
 
     public:
-        requestqueue() {}
+        requestqueue();
 
-        void push(request* request) {}
+        void push(request* request);
 
-        request* pop() {}
+        request* pop();
 };
 
 #endif

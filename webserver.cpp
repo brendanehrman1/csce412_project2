@@ -1,40 +1,31 @@
 #include "webserver.h"
 
-class webserver
-{
-    private:
-        request* r;
-        int request_added;
-        int clockcycle;
+webserver::webserver() {
+    request_added = -1;
+    clockcycle = 0;
+}
 
-    public:
-        webserver() {
-            request_added = -1;
-            clockcycle = 0;
-        }
+void webserver::update() {
+    clockcycle++;
+    if(r->get_time() + request_added == clockcycle) {
+        r = nullptr;
+        request_added = -1;
+    }
+}
 
-        void update() {
-            clockcycle++;
-            if(r->get_time() + request_added == clockcycle) {
-                r = nullptr;
-                request_added = -1;
-            }
-        }
+bool webserver::is_available() {
+    return r == nullptr;
+}
 
-        bool is_available() {
-            return r == nullptr;
-        }
+bool webserver::is_full() {
+    return r != nullptr;
+}
 
-        bool is_full() {
-            return r != nullptr;
-        }
+void webserver::add_request(request* r) {
+    this->r = r;
+    request_added = clockcycle;
+}
 
-        void add_request(request* r) {
-            this->r = r;
-            request_added = clockcycle;
-        }
-
-        request get_request() {
-            return *r;
-        }
-};
+request webserver::get_request() {
+    return *r;
+}

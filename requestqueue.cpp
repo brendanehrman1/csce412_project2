@@ -1,21 +1,14 @@
 #include "requestqueue.h"
 #include "request.h"
 
-class requestqueue
-{
-    private:
-        queue<request*> request_q;
+requestqueue::requestqueue() {}
 
-    public:
-        requestqueue() {}
+void requestqueue::push(request* r) {
+    request_q.push(r);
+}
 
-        void push(request* r) {
-            request_q.push(r);
-        }
-
-        request* pop() {
-            request* r = request_q.front();
-            request_q.pop();
-            return r;
-        }
-};
+request* requestqueue::pop() {
+    request* r = request_q.front();
+    request_q.pop();
+    return r;
+}

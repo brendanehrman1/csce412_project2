@@ -12,19 +12,19 @@ class request {
         int time;
 
     public:
-        request(string in, string out, int time) {}
+        request(string in, string out, int time);
 
-        request() {}
+        request();
 
-        string generate_ip() {}
+        string generate_ip();
 
-        int generate_time() {}
+        int generate_time();
 
-        string get_ip_in() {}
+        string get_ip_in();
 
-        string get_ip_out() {}
+        string get_ip_out();
 
-        int get_time() {}
+        int get_time();
 };
 
 #endif
