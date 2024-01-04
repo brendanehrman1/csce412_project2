@@ -34,3 +34,12 @@ request* requestqueue::pop() {
     request_q.pop();
     return r;
 }
+
+/**
+ * @brief Provides the size of the queue.
+ * @return The size of the queue.
+ * @see std::queue::size()
+ */
+int requestqueue::get_size() {
+    return request_q.size();
+}

@@ -19,8 +19,7 @@ webserver::webserver() : r(nullptr), request_added(-1), clockcycle(0) {}
  * @see is_available(), is_full()
  */
 void webserver::update() {
-    if(r != nullptr && request_added != -1 && r->get_time() + request_added == clockcycle) {
-        // delete r;
+    if(r && r->get_time() + request_added == clockcycle) {
         r = nullptr;
         request_added = -1;
     }
@@ -55,7 +54,7 @@ bool webserver::is_full() {
  */
 void webserver::add_request(request* r) {
     this->r = r;
-    request_added = clockcycle;
+    request_added = clockcycle - 1;
 }
 
 /**

@@ -13,9 +13,16 @@
 request::request(std::string in, std::string out, int time) : ip_in(in), ip_out(out), time(time) {}
 
 /**
+ * @brief Constructor to initialize a request with a given time range.
+ * @param lower The lower bound of the time range.
+ * @param upper The upper bound of the time range.
+ */
+request::request(int lower, int upper) : request(generate_ip(), generate_ip(), generate_time(lower, upper)) {}
+
+/**
  * @brief Default constructor generating random IP addresses and time for the request.
  */
-request::request() : request(generate_ip(), generate_ip(), generate_time()) {}
+request::request() : request(4, 100) {}
 
 /**
  * @brief Generates a random IP address.
@@ -31,10 +38,12 @@ std::string request::generate_ip() {
 
 /**
  * @brief Generates a random time for the request.
+ * @param min the lower bound.
+ * @param max the upper bound.
  * @return A randomly generated time.
  */
-int request::generate_time() {
-    return rand() % 96 + 4;
+int request::generate_time(int min, int max) {
+    return rand() % (max - min) + min;
 }
 
 /**

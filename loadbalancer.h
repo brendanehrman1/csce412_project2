@@ -19,15 +19,15 @@ class loadbalancer {
     private:
         requestqueue* request_q;
         vector<webserver*> servers;
-        string logfile;
         int clockcycle;
+        int num_servers;
 
     public:
         /**
          * @brief Constructor for the LoadBalancer class.
-         * @param logfile The path to the log file.
+         * @param num_server The number of running servers.
          */
-        loadbalancer(string logfile);
+        loadbalancer(int num_server);
  
         /**
          * @brief Destructor for the LoadBalancer class.
@@ -51,22 +51,10 @@ class loadbalancer {
         void add_request(request* request);
 
         /**
-         * @brief Adds a server to the load balancer's list of servers.
-         * @param server The server to be added.
+         * @brief Provides the current number of requests in the requestqueue
+         * @see requestqueue::get_size()
          */
-        void add_server(webserver* server);
-
-        /**
-         * @brief Removes and returns the last server from the load balancer's list of servers.
-         * @return The removed server.
-         */
-        webserver* remove_server();
-
-        /**
-         * @brief Prints the status of servers in the load balancer.
-         * @see webserver::get_request()
-         */
-        void print();
+        int get_request_size();
 };
 
 #endif

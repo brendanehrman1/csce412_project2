@@ -63,6 +63,8 @@
     "cmath": "cpp",
     "*.tcc": "cpp",
     "ostream": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "random": "cpp",
+    "limits": "cpp"
   }
 }

@@ -35,6 +35,13 @@ class requestqueue
          * @see std::queue::pop()
          */
         request* pop();
+
+        /**
+         * @brief Provides the size of the queue.
+         * @return The size of the queue.
+         * @see std::queue::size()
+         */
+        int get_size();
 };
 
 #endif

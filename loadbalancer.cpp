@@ -9,8 +9,12 @@
  * @brief Constructor for the LoadBalancer class.
  * @param logfile The path to the log file.
  */
-loadbalancer::loadbalancer(string logfile) : logfile(logfile), clockcycle(0) {
+loadbalancer::loadbalancer(int num_servers) : clockcycle(0), num_servers(num_servers) {
     request_q = new requestqueue();
+    for (size_t i = 0; i < num_servers; i++) {
+        webserver* server = new webserver();
+        servers.push_back(server);
+    }
 }
 
 /**
@@ -28,30 +32,44 @@ loadbalancer::~loadbalancer() {
  * @see requestqueue::push()
  */
 void loadbalancer::update() {
-    ofstream log;
-    log.open(logfile, ios_base::app);
     for (size_t i = 0; i < servers.size(); i++) {
         webserver* server = servers.at(i);
+        if (!server)
+            continue;
         request* old_request = server->get_request();
         server->update();
         if (server->is_available()) {
-            request* new_request = request_q->pop();
+            if (request_q->get_size() < 15 * num_servers) {
+                cout << clockcycle << " | ";
+                cout << "Server " << i << " | Deleting Server..." << endl;
+                delete server;
+                servers.at(i) = nullptr;
+                num_servers--;
+            } else {
+                if (request_q->get_size() > 25 * num_servers) {
+                    cout << clockcycle << " | ";
+                    cout << "Server " << servers.size() << " | Creating Server..." << endl;
+                    webserver* server = new webserver();
+                    servers.push_back(server);
+                    num_servers++;
+                }
+                request* new_request = request_q->pop();
 
-            if (old_request) {
-                log << clockcycle << " | ";
-                log << "Server " << i << " | ";
-                log << "Request Complete: " << old_request->get_ip_in() << " -> " << old_request->get_ip_out() << endl;
-            }
+                if (old_request) {
+                    cout << clockcycle << " | ";
+                    cout << "Server " << i << " | ";
+                    cout << "Request Complete: " << old_request->get_ip_in() << " -> " << old_request->get_ip_out() << endl;
+                }
 
-            if (new_request) {
-                server->add_request(new_request);
-                log << clockcycle << " | ";
-                log << "Server " << i << " | ";
-                log << "Request Assigned: " << new_request->get_ip_in() << " -> " << new_request->get_ip_out() << endl;
+                if (new_request) {
+                    server->add_request(new_request);
+                    cout << clockcycle << " | ";
+                    cout << "Server " << i << " | ";
+                    cout << "Request Assigned: " << new_request->get_ip_in() << " -> " << new_request->get_ip_out() << " | Time to Complete: " << new_request->get_time() << endl;
+                }
             }
         }
     }
-    log.close();
     clockcycle++;
 }
 
@@ -65,37 +83,9 @@ void loadbalancer::add_request(request* request) {
 }
 
 /**
- * @brief Adds a server to the load balancer's list of servers.
- * @param server The server to be added.
+ * @brief Provides the current number of requests in the requestqueue
+ * @see requestqueue::get_size()
  */
-void loadbalancer::add_server(webserver* server) {
-    servers.push_back(server);
-}
-
-/**
- * @brief Removes and returns the last server from the load balancer's list of servers.
- * @return The removed server.
- */
-webserver* loadbalancer::remove_server() {
-    webserver* server = servers.back();
-    servers.pop_back();
-    return server;
-}
-
-/**
- * @brief Prints the status of servers in the load balancer.
- * @see webserver::get_request()
- */
-void loadbalancer::print() {
-    cout << "----------------------------------------------------------" << endl;
-    for (size_t i = 0; i < servers.size(); i++) {
-        cout << "|      Server " << i << "       | ";
-        if (servers.at(i)->is_full()) {
-            cout << servers.at(i)->get_request()->get_ip_in() << " -> ";
-            cout << servers.at(i)->get_request()->get_ip_out() << endl;
-        } else {
-            cout << "EMPTY" << endl;
-        }
-        cout << "----------------------------------------------------------" << endl;
-    }
+int loadbalancer::get_request_size() {
+    return request_q->get_size();
 }

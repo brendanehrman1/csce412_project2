@@ -25,6 +25,13 @@ class request {
         request(string in, string out, int time);
 
         /**
+         * @brief Constructor to initialize a request with a given time range.
+         * @param lower The lower bound of the time range.
+         * @param upper The upper bound of the time range.
+         */
+        request(int lower, int upper);
+
+        /**
          * @brief Default constructor generating random IP addresses and time for the request.
          */
         request();
@@ -37,9 +44,11 @@ class request {
 
         /**
          * @brief Generates a random time for the request.
+         * @param min the lower bound.
+         * @param max the upper bound.
          * @return A randomly generated time.
          */
-        int generate_time();
+        int generate_time(int min, int max);
 
         /**
          * @brief Getter for the input IP address.
