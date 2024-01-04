@@ -12,13 +12,15 @@ using namespace std;
 
 class loadbalancer {
     private:
-        requestqueue request_q;
+        requestqueue* request_q;
         vector<webserver*> servers;
         string logfile;
         int clockcycle;
 
     public:
         loadbalancer(string logfile);
+
+        ~loadbalancer();
 
         void update();
 

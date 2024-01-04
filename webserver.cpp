@@ -1,17 +1,14 @@
 #include "webserver.h"
 
-webserver::webserver() {
-    request_added = -1;
-    clockcycle = 0;
-}
+webserver::webserver() : r(nullptr), request_added(-1), clockcycle(0) {}
 
 void webserver::update() {
-    clockcycle++;
-    if(r->get_time() + request_added == clockcycle) {
-        delete r;
+    if(r != nullptr && request_added != -1 && r->get_time() + request_added == clockcycle) {
+        // delete r;
         r = nullptr;
         request_added = -1;
     }
+    clockcycle++;
 }
 
 bool webserver::is_available() {

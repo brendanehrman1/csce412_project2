@@ -8,6 +8,9 @@ void requestqueue::push(request* r) {
 }
 
 request* requestqueue::pop() {
+    if (request_q.empty()) {
+        return nullptr;
+    }
     request* r = request_q.front();
     request_q.pop();
     return r;

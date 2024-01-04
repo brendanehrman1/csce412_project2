@@ -13,7 +13,7 @@ string request::generate_ip() {
 }
 
 int request::generate_time() {
-    return rand() % 97 + 4;
+    return rand() % 96 + 4;
 }
 
 string request::get_ip_in() {
