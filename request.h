@@ -19,6 +19,12 @@ class request {
         string generate_ip() {}
 
         int generate_time() {}
+
+        string get_ip_in() {}
+
+        string get_ip_out() {}
+
+        int get_time() {}
 };
 
 #endif

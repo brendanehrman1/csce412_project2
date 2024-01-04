@@ -22,4 +22,16 @@ class request {
         int generate_time() {
             return rand() % 97 + 4;
         }
+
+        string get_ip_in() {
+            return ip_in;
+        }
+
+        string get_ip_out() {
+            return ip_out;
+        }
+
+        int get_time() {
+            return time;
+        }
 };
