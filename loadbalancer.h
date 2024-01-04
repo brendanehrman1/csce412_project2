@@ -24,7 +24,7 @@ class loadbalancer {
 
         void add_request(request* request) {}
 
-        void add_server() {}
+        void add_server(webserver server) {}
 
         void print() {}
 };
