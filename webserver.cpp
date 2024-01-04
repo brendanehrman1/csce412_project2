@@ -1,3 +1,8 @@
+/**
+ * @file webserver.cpp
+ * @brief CPP file for the WebServer class.
+ */
+
 #include "webserver.h"
 
 /**
