@@ -1,3 +1,7 @@
+/**
+ * @file webserver.h
+ * @brief Header file for the WebServer class.
+ */
 #ifndef WEBSERVER_H
 #define WEBSERVER_H
 
