@@ -33,4 +33,8 @@ public:
         this->r = r;
         request_added = clockcycle;
     }
+
+    request getRequest() {
+        return *r;
+    }
 };

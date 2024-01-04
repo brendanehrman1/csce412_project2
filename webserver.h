@@ -8,7 +8,7 @@ using namespace std;
 class webserver
 {
 private:
-    request request;
+    request r;
     int request_added;
     int clockcycle;
 
@@ -22,6 +22,8 @@ public:
     bool isFull() {}
 
     void addRequest() {}
+
+    request getRequest() {}
 };
 
 #endif
