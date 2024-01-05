@@ -1,3 +1,11 @@
+/*! \mainpage Load Balancer
+ *
+ * \section intro_sec Introduction
+ *
+ * Our documentation for the load balancer project.
+ * 
+ */
+
 /**
  * @file main.cpp
  * @brief CPP file for the main program.
