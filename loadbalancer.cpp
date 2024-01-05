@@ -40,7 +40,7 @@ void loadbalancer::update() {
         server->update();
         if (server->is_available()) {
             if (request_q->get_size() < 15 * num_servers) {
-                cout << clockcycle << " | ";
+                cout << "Time: " << clockcycle << " | ";
                 cout << "Server " << i << " | Deleting Server..." << " | ";
                 cout << "LB Ratio: " << request_q->get_size() << " / " << num_servers << endl;
                 delete server;
@@ -48,7 +48,7 @@ void loadbalancer::update() {
                 num_servers--;
             } else {
                 if (request_q->get_size() > 25 * num_servers) {
-                    cout << clockcycle << " | ";
+                    cout << "Time: " << clockcycle << " | ";
                     cout << "Server " << servers.size() << " | Creating Server..." << " | ";
                     cout << "LB Ratio: " << request_q->get_size() << " / " << num_servers << endl;
                     webserver* server = new webserver();
@@ -58,14 +58,14 @@ void loadbalancer::update() {
                 request* new_request = request_q->pop();
 
                 if (old_request) {
-                    cout << clockcycle << " | ";
+                    cout << "Time: " << clockcycle << " | ";
                     cout << "Server " << i << " | ";
                     cout << "Request Complete: " << old_request->get_ip_in() << " -> " << old_request->get_ip_out() << endl;
                 }
 
                 if (new_request) {
                     server->add_request(new_request);
-                    cout << clockcycle << " | ";
+                    cout << "Time: " << clockcycle << " | ";
                     cout << "Server " << i << " | ";
                     cout << "Request Assigned: " << new_request->get_ip_in() << " -> " << new_request->get_ip_out() << " | Time to Complete: " << new_request->get_time() << endl;
                 }
