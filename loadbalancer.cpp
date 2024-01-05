@@ -38,8 +38,8 @@ void loadbalancer::update() {
             continue;
         request* old_request = server->get_request();
         server->update();
-        if (server->is_available()) {
-            if (request_q->get_size() < 15 * num_servers) {
+        if (server->is_available() && request_q->get_size() > 0) {
+            if (num_servers > 1 && request_q->get_size() < 15 * num_servers) {
                 cout << "Time: " << clockcycle << " | ";
                 cout << "Server " << i << " | Deleting Server..." << " | ";
                 cout << "LB Ratio: " << request_q->get_size() << " / " << num_servers << endl;
@@ -61,6 +61,14 @@ void loadbalancer::update() {
                     cout << "Time: " << clockcycle << " | ";
                     cout << "Server " << i << " | ";
                     cout << "Request Complete: " << old_request->get_ip_in() << " -> " << old_request->get_ip_out() << endl;
+                }
+
+                int first_ip_seg = stoi(new_request->get_ip_in().substr(0, new_request->get_ip_in().find(".")));
+                if (first_ip_seg >= 200 && first_ip_seg <= 300) {
+                    cout << "Time: " << clockcycle << " | ";
+                    cout << "Server " << i << " | ";
+                    cout << "Request Blocked: " << new_request->get_ip_in() << " -> " << new_request->get_ip_out() << endl;
+                    continue;
                 }
 
                 if (new_request) {

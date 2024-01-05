@@ -33,14 +33,17 @@ using namespace std;
  */
 int main(int argc, char* argv[]) {
     // Check if the correct number of command line arguments is provided
-    if (argc != 3) {
-        std::cout << "Usage: ./main <num_server> <num_clockcycle>" << std::endl;
+    if (argc < 3) {
+        std::cout << "Usage: ./main <num_server> <num_clockcycle> <request_rate?>" << std::endl;
         return 1;
     }
 
     // Parse command line arguments
     int num_server = stoi(argv[1]);
     int num_clockcycle = stoi(argv[2]);
+    double rate = 0.2;
+    if (argc == 4)
+        rate = stof(argv[3]);
     int num_initial_request = num_server * 20;
     int time_lower = 4;
     int time_upper = 100;
@@ -59,8 +62,8 @@ int main(int argc, char* argv[]) {
 
     // Simulate the specified number of clock cycles
     for (int i = 0; i < num_clockcycle; i++) {
-        // Introduce new requests randomly with a probability of 20%
-        if (rand() % 100 < 20) {
+        // Introduce new requests randomly with a probability specified by the user
+        if ((double)rand() / RAND_MAX < rate) {
             request* rand_request = new request(time_lower, time_upper);
             lb->add_request(rand_request);
         }
