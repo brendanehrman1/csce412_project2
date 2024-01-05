@@ -41,14 +41,16 @@ void loadbalancer::update() {
         if (server->is_available()) {
             if (request_q->get_size() < 15 * num_servers) {
                 cout << clockcycle << " | ";
-                cout << "Server " << i << " | Deleting Server..." << endl;
+                cout << "Server " << i << " | Deleting Server..." << " | ";
+                cout << "LB Ratio: " << request_q->get_size() << " / " << num_servers << endl;
                 delete server;
                 servers.at(i) = nullptr;
                 num_servers--;
             } else {
                 if (request_q->get_size() > 25 * num_servers) {
                     cout << clockcycle << " | ";
-                    cout << "Server " << servers.size() << " | Creating Server..." << endl;
+                    cout << "Server " << servers.size() << " | Creating Server..." << " | ";
+                    cout << "LB Ratio: " << request_q->get_size() << " / " << num_servers << endl;
                     webserver* server = new webserver();
                     servers.push_back(server);
                     num_servers++;
