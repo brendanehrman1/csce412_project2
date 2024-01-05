@@ -34,7 +34,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     // Check if the correct number of command line arguments is provided
     if (argc < 3) {
-        std::cout << "Usage: ./main <num_server> <num_clockcycle> <request_rate?>" << std::endl;
+        std::cout << "Usage: ./main <num_server> <num_clockcycle> <request_rate?> <ip_block_min?> <ip_block_max?>" << std::endl;
         return 1;
     }
 
@@ -42,8 +42,18 @@ int main(int argc, char* argv[]) {
     int num_server = stoi(argv[1]);
     int num_clockcycle = stoi(argv[2]);
     double rate = 0.2;
-    if (argc == 4)
+    int min = 200;
+    int max = 300;
+    if (argc == 4) {
         rate = stof(argv[3]);
+    } else if (argc == 5) {
+        min = stoi(argv[3]);
+        max = stoi(argv[4]);
+    } else if (argc == 6) {
+        rate = stof(argv[3]);
+        min = stoi(argv[4]);
+        max = stoi(argv[5]);
+    }
     int num_initial_request = num_server * 20;
     int time_lower = 4;
     int time_upper = 100;
@@ -52,7 +62,7 @@ int main(int argc, char* argv[]) {
     cout << "Request Time Range: [" << time_lower << ", " << time_upper << ")" << endl;
 
     // Create a load balancer instance and add servers
-    loadbalancer* lb = new loadbalancer(num_server);
+    loadbalancer* lb = new loadbalancer(num_server, min, max);
     
     // Add specified number of initial requests to the load balancer
     for (int i = 0; i < num_initial_request; i++) {

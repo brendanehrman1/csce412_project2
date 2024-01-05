@@ -7,15 +7,23 @@
 
 /**
  * @brief Constructor for the LoadBalancer class.
- * @param logfile The path to the log file.
+ * @param num_servers The number of running servers.
+ * @param min The lower bound of blocked IP's.
+ * @param max The upper bound of blocked IP's.
  */
-loadbalancer::loadbalancer(int num_servers) : clockcycle(0), num_servers(num_servers) {
+loadbalancer::loadbalancer(int num_servers, int min, int max) : clockcycle(0), num_servers(num_servers), lower_bound(min), upper_bound(max) {
     request_q = new requestqueue();
     for (size_t i = 0; i < num_servers; i++) {
         webserver* server = new webserver();
         servers.push_back(server);
     }
 }
+
+/**
+ * @brief Constructor for the LoadBalancer class.
+ * @param logfile The path to the log file.
+ */
+loadbalancer::loadbalancer(int num_servers) : loadbalancer(num_servers, 200, 300) {}
 
 /**
  * @brief Destructor for the LoadBalancer class.
@@ -47,7 +55,7 @@ void loadbalancer::update() {
                 servers.at(i) = nullptr;
                 num_servers--;
             } else {
-                if (request_q->get_size() > 25 * num_servers) {
+                if (request_q->get_size() > 30 * num_servers) {
                     cout << "Time: " << clockcycle << " | ";
                     cout << "Server " << servers.size() << " | Creating Server..." << " | ";
                     cout << "LB Ratio: " << request_q->get_size() << " / " << num_servers << endl;
@@ -64,7 +72,7 @@ void loadbalancer::update() {
                 }
 
                 int first_ip_seg = stoi(new_request->get_ip_in().substr(0, new_request->get_ip_in().find(".")));
-                if (first_ip_seg >= 200 && first_ip_seg <= 300) {
+                if (first_ip_seg >= lower_bound && first_ip_seg <= upper_bound) {
                     cout << "Time: " << clockcycle << " | ";
                     cout << "Server " << i << " | ";
                     cout << "Request Blocked: " << new_request->get_ip_in() << " -> " << new_request->get_ip_out() << endl;

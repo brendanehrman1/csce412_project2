@@ -21,13 +21,24 @@ class loadbalancer {
         vector<webserver*> servers;
         int clockcycle;
         int num_servers;
+        int lower_bound;
+        int upper_bound;
 
     public:
+       
         /**
          * @brief Constructor for the LoadBalancer class.
-         * @param num_server The number of running servers.
+         * @param num_servers The number of running servers.
+         * @param min The lower bound of blocked IP's.
+         * @param max The upper bound of blocked IP's.
          */
-        loadbalancer(int num_server);
+        loadbalancer(int num_servers, int min, int max);
+
+         /**
+         * @brief Constructor for the LoadBalancer class.
+         * @param num_servers The number of running servers.
+         */
+        loadbalancer(int num_servers);
  
         /**
          * @brief Destructor for the LoadBalancer class.
