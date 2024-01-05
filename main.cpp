@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     
     // Add specified number of initial requests to the load balancer
     for (int i = 0; i < num_initial_request; i++) {
-        request* initial_request = new request();
+        request* initial_request = new request(time_lower, time_upper);
         lb->add_request(initial_request);
     }
 
